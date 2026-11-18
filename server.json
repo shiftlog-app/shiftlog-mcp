@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "it.shiftlog/mcp",
+  "title": "ShiftLog.it",
+  "description": "Log billable hours and generate AI-assisted monthly client timesheets from coding sessions.",
+  "version": "1.0.2",
+  "websiteUrl": "https://shiftlog.it",
+  "repository": {
+    "url": "https://github.com/shiftlog-app/shiftlog-mcp",
+    "source": "github"
+  },
+  "icons": [
+    {"src": "https://shiftlog.it/mcp-icon.svg", "mimeType": "image/svg+xml", "sizes": ["any"]},
+    {"src": "https://shiftlog.it/mcp-icon.png", "mimeType": "image/png", "sizes": ["180x180"]}
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://shiftlog.it/mcp"
+    }
+  ]
+}

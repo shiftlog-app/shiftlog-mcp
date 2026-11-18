@@ -1,0 +1,110 @@
+# ShiftLog.it MCP server
+
+[ShiftLog.it](https://shiftlog.it) is a work log and timesheet app for
+contractors and freelancers: log your hours, then generate the monthly
+timesheet or work report your client needs, as a PDF, CSV or Excel file.
+
+This is its hosted MCP server. Connect it to Claude, Claude Code or any
+other MCP client, and log the work you just did, or look up what you
+logged, without leaving the conversation:
+
+- "Log today's work: 3 hours, the checkout bug fix we just did. Reference JIRA-482."
+- "What did I log for Acme last week, and how many hours in total?"
+- "Log yesterday from 9:00 to 12:30: workshop with the client on the new onboarding flow."
+
+There is nothing to install or run. You need a ShiftLog.it account (the
+connection works on every plan, including Free).
+
+| | |
+|---|---|
+| Endpoint | `https://shiftlog.it/mcp` |
+| Transport | Streamable HTTP |
+| Authentication | OAuth 2.1 with dynamic client registration: sign in to ShiftLog.it and approve the app |
+| Registry name | `it.shiftlog/mcp` ([MCP Registry](https://registry.modelcontextprotocol.io/?q=shiftlog)) |
+
+## Connect it
+
+### Claude (claude.ai and the desktop app)
+
+1. Open **Customize**, then **Connectors**, and add a custom connector
+   with the URL `https://shiftlog.it/mcp`.
+2. Claude sends you to ShiftLog.it. Sign in if you aren't already.
+3. The consent page shows which app is asking and what it will be able
+   to do. Click **Allow**, and you're back in Claude.
+
+### Claude Code
+
+```
+claude mcp add --transport http shiftlog https://shiftlog.it/mcp
+```
+
+Then run `/mcp` in Claude Code, choose **shiftlog** and authenticate. Your
+browser opens the same sign-in and consent page.
+
+### Other MCP clients
+
+Add a remote (HTTP) server with the URL `https://shiftlog.it/mcp`. The
+client finds the sign-in page by itself: an unauthenticated request gets
+a `401` whose `WWW-Authenticate` header points to the protected resource
+metadata (RFC 9728), and from there to the authorization server's
+metadata at `https://shiftlog.it/.well-known/oauth-authorization-server`.
+A typical JSON configuration:
+
+```json
+{
+  "mcpServers": {
+    "shiftlog": {
+      "type": "http",
+      "url": "https://shiftlog.it/mcp"
+    }
+  }
+}
+```
+
+Redirect URIs must be `https`, or `http` to `localhost` or `127.0.0.1`.
+
+## Tools
+
+| Tool | What it does | Permission |
+|---|---|---|
+| `list_agents` | Lists your agents (the businesses or clients you log work for) and which one is current. | `tasks:read` |
+| `list_tasks` | Lists an agent's tasks for a range of days (up to 92 days and 500 tasks), with dates, hours, titles, descriptions, your references and whether a task is already in a report. | `tasks:read` |
+| `log_task` | Adds one task to an agent's work log: a date, the hours (or a start and end time), a description, and optionally a title and a reference such as a ticket id. | `tasks:write` |
+
+What the connection can't do:
+
+- **It only adds.** No tool changes or deletes a task; edit tasks in the app.
+- **It doesn't guess hours.** A task needs the duration you state.
+- **It can't reach anything else** in your account: no settings, billing,
+  reports or AI features.
+
+A task logged through MCP is like any other: it gets the agent's hourly
+rate and appears in the work log, reports and exports.
+
+## Permissions
+
+The consent page asks for two scopes:
+
+- `tasks:read`: see your agents and the tasks in your work log
+- `tasks:write`: add tasks to your work log
+
+## Privacy and disconnecting
+
+The app you connect sees only what it reads through these tools at your
+request. What ShiftLog.it keeps about each connection, and for how long,
+is in section 2.9 of the [Privacy Policy](https://shiftlog.it/privacy).
+
+To end a connection, open **Settings**, then **Connected apps** in
+ShiftLog.it and click **Disconnect**. Access ends at once. A connection
+you don't use for 30 days ends on its own.
+
+## Links
+
+- Website: https://shiftlog.it
+- Pricing: https://shiftlog.it/pricing
+- Guide: [Connect ShiftLog.it to Claude and log work from a chat](https://shiftlog.it/blog/connect-shiftlog-to-claude)
+- Support: support@shiftlog.it
+
+This repository holds the server's documentation and its MCP Registry
+entry (`server.json`). The server itself is part of the ShiftLog.it app
+and is not open source.
