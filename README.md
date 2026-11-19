@@ -26,20 +26,30 @@ connection works on every plan, including Free).
 
 ### Claude (claude.ai and the desktop app)
 
-1. Open **Customize**, then **Connectors**, and add a custom connector
-   with the URL `https://shiftlog.it/mcp`.
+ShiftLog.it is in [Claude's connector directory](https://claude.ai/directory/connectors/shiftlog):
+
+1. Open **Plugins** in the sidebar (**Customize** on Team and Enterprise
+   plans), search for **ShiftLog** and click **+ Add**, or open
+   [claude.ai/plugins?q=shiftlog](https://claude.ai/plugins?q=shiftlog).
 2. Claude sends you to ShiftLog.it. Sign in if you aren't already.
 3. The consent page shows which app is asking and what it will be able
    to do. Click **Allow**, and you're back in Claude.
 
+It can also be added as a custom connector with the URL
+`https://shiftlog.it/mcp`.
+
 ### Claude Code
+
+Added on claude.ai, it shows up in Claude Code signed in with the same
+account: run `/mcp`, choose **claude.ai ShiftLog.it** and authenticate.
+Or add it directly:
 
 ```
 claude mcp add --transport http shiftlog https://shiftlog.it/mcp
 ```
 
-Then run `/mcp` in Claude Code, choose **shiftlog** and authenticate. Your
-browser opens the same sign-in and consent page.
+Then run `/mcp`, choose **shiftlog** and authenticate. Your browser opens
+the same sign-in and consent page.
 
 ### ChatGPT
 
