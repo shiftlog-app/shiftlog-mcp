@@ -4,8 +4,8 @@
 contractors and freelancers: log your hours, then generate the monthly
 timesheet or work report your client needs, as a PDF, CSV or Excel file.
 
-This is its hosted MCP server. Connect it to Claude, Claude Code or any
-other MCP client, and log the work you just did, or look up what you
+This is its hosted MCP server. Connect it to Claude, Claude Code, ChatGPT
+or any other MCP client, and log the work you just did, or look up what you
 logged, without leaving the conversation:
 
 - "Log today's work: 3 hours, the checkout bug fix we just did. Reference JIRA-482."
@@ -40,6 +40,16 @@ claude mcp add --transport http shiftlog https://shiftlog.it/mcp
 
 Then run `/mcp` in Claude Code, choose **shiftlog** and authenticate. Your
 browser opens the same sign-in and consent page.
+
+### ChatGPT
+
+1. Open **Plugins**, click **+** and choose **Add custom MCP server**.
+2. Enter the URL `https://shiftlog.it/mcp` and choose **OAuth**. No client
+   ID is needed: ChatGPT registers itself.
+3. Connect, sign in to ShiftLog.it and click **Allow**. ChatGPT asks you to
+   confirm before it logs a task.
+
+Guide: [Connect ShiftLog.it to ChatGPT](https://shiftlog.it/blog/connect-shiftlog-to-chatgpt)
 
 ### Other MCP clients
 
@@ -102,7 +112,8 @@ you don't use for 30 days ends on its own.
 
 - Website: https://shiftlog.it
 - Pricing: https://shiftlog.it/pricing
-- Guide: [Connect ShiftLog.it to Claude and log work from a chat](https://shiftlog.it/blog/connect-shiftlog-to-claude)
+- Guides: [Connect ShiftLog.it to Claude](https://shiftlog.it/blog/connect-shiftlog-to-claude),
+  [Connect ShiftLog.it to ChatGPT](https://shiftlog.it/blog/connect-shiftlog-to-chatgpt)
 - Support: support@shiftlog.it
 
 This repository holds the server's documentation and its MCP Registry
