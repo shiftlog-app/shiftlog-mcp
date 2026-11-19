@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "shiftlog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Log billable hours and look up your work log in ShiftLog.it, the timesheet app for contractors and freelancers.",
   "author": {
     "name": "Softlane sp. z o.o.",
@@ -24,7 +24,7 @@
       "interface": {
         "displayName": "ShiftLog.it",
         "shortDescription": "Log billable hours from chat",
-        "longDescription": "ShiftLog.it is a work log and timesheet app for contractors and freelancers. Connect it to log the work you just did, with the hours, a description and an optional ticket reference, and to look up what you logged for a client or a period.\n\nYour entries go into the monthly timesheets and reports you send your clients, as PDF, CSV or Excel files, priced at each client's hourly rate.\n\nWhat you can do from ChatGPT:\n- Log a task: the date, the hours (or a start and end time), a description and optionally a title and a reference such as a ticket id.\n- List tasks for a range of days, with totals and whether a task is already in a report.\n- List your agents, the businesses or clients you log work for.\n\nThe connection can only read your agents and tasks and add tasks: it never edits or deletes anything. It works on every ShiftLog.it plan, including the free one.",
+        "longDescription": "ShiftLog.it is a work log and timesheet app for contractors and freelancers. Connect it to log the work you just did, with the hours, a description and an optional ticket reference, and to look up what you logged for a client or a period.\n\nYour entries go into the monthly timesheets and reports you send your clients, as PDF, CSV or Excel files.\n\nWhat you can do from ChatGPT:\n- Log a task: the date, the hours (or a start and end time), a description and optionally a title and a reference such as a ticket id.\n- List tasks for a range of days, with totals and whether a task is already in a report.\n- List your agents, the businesses or clients you log work for.\n\nThe connection can only read your agents and tasks and add tasks: it never edits or deletes anything.",
         "developerName": "Softlane sp. z o.o.",
         "category": "Productivity",
         "capabilities": [
