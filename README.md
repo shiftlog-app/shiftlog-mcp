@@ -119,3 +119,14 @@ you don't use for 30 days ends on its own.
 This repository holds the server's documentation and its MCP Registry
 entry (`server.json`). The server itself is part of the ShiftLog.it app
 and is not open source.
+
+## ChatGPT plugin package
+
+`chatgpt-plugin/` is the package submitted to the ChatGPT plugin
+directory: the listing and review test cases (`plugin.json`), the MCP
+connection (`mcp.json`), a skill and the icon. To build the ZIP for
+platform.openai.com/plugins (bump `version` in `plugin.json` first):
+
+```
+cd chatgpt-plugin && rm -f ../shiftlog-chatgpt-plugin.zip && zip -r -X ../shiftlog-chatgpt-plugin.zip . -x '*.DS_Store'
+```

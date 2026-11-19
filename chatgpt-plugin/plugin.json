@@ -1,0 +1,107 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "shiftlog",
+  "version": "1.0.0",
+  "description": "Log billable hours and look up your work log in ShiftLog.it, the timesheet app for contractors and freelancers.",
+  "author": {
+    "name": "Softlane sp. z o.o.",
+    "email": "support@shiftlog.it",
+    "url": "https://shiftlog.it"
+  },
+  "homepage": "https://shiftlog.it",
+  "repository": "https://github.com/shiftlog-app/shiftlog-mcp",
+  "keywords": [
+    "timesheet",
+    "time tracking",
+    "work log",
+    "billable hours",
+    "freelance",
+    "contractor"
+  ],
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/shiftlog-work-log/SKILL.md",
+      "interface": {
+        "displayName": "ShiftLog.it",
+        "shortDescription": "Log billable hours from chat",
+        "longDescription": "ShiftLog.it is a work log and timesheet app for contractors and freelancers. Connect it to log the work you just did, with the hours, a description and an optional ticket reference, and to look up what you logged for a client or a period.\n\nYour entries go into the monthly timesheets and reports you send your clients, as PDF, CSV or Excel files, priced at each client's hourly rate.\n\nWhat you can do from ChatGPT:\n- Log a task: the date, the hours (or a start and end time), a description and optionally a title and a reference such as a ticket id.\n- List tasks for a range of days, with totals and whether a task is already in a report.\n- List your agents, the businesses or clients you log work for.\n\nThe connection can only read your agents and tasks and add tasks: it never edits or deletes anything. It works on every ShiftLog.it plan, including the free one.",
+        "developerName": "Softlane sp. z o.o.",
+        "category": "Productivity",
+        "capabilities": [
+          "Log a task with its date, hours and description",
+          "List logged tasks for a range of days",
+          "List the businesses or clients you log work for"
+        ],
+        "websiteURL": "https://shiftlog.it",
+        "supportURL": "https://shiftlog.it/blog/connect-shiftlog-to-chatgpt",
+        "privacyPolicyURL": "https://shiftlog.it/privacy",
+        "termsOfServiceURL": "https://shiftlog.it/terms",
+        "defaultPrompt": [
+          "Log 2 hours today on ShiftLog: call with the client about the new onboarding flow.",
+          "How many hours have I logged on ShiftLog this month?",
+          "Show my ShiftLog tasks from last week."
+        ],
+        "brandColor": "#167bff",
+        "brandColorDark": "#167bff",
+        "logo": "./assets/logo.png",
+        "composerIcon": "./assets/logo.png"
+      },
+      "review": {
+        "demo_recording_url": "https://drive.google.com/file/d/1-578lep80HKON6WmXpyj4ZNX0UB5dcic/view",
+        "commerce": false,
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Log one task with a user-specified duration to the current agent. Use the dedicated reviewer account; no client is named, so the current agent should be used.",
+              "prompt": "Log 2 hours today: reviewed the client's contract draft and sent comments.",
+              "tools_triggered": "log_task",
+              "expected_behavior": "After any required confirmation, call log_task once for the current agent, today's date, 2 hours, and the stated description. Confirm the saved date, duration, agent, and description from the tool result; do not claim success if the call fails."
+            },
+            {
+              "description": "Log a task from a time range and include a user-supplied reference. Use the dedicated reviewer account.",
+              "prompt": "Log yesterday from 9:00 to 12:30: workshop with the client on the onboarding flow. Reference PO-2207.",
+              "tools_triggered": "log_task",
+              "expected_behavior": "After any required confirmation, call log_task once for yesterday with start 09:00, end 12:30, the stated description, and externalRef PO-2207. The duration must equal 3.5 hours. Confirm saved values from the tool result; do not invent a title or agent."
+            },
+            {
+              "description": "List the businesses or clients (agents) in the connected account and identify the current agent.",
+              "prompt": "Which clients do I have in ShiftLog, and which one is current?",
+              "tools_triggered": "list_agents",
+              "expected_behavior": "Call list_agents and list the returned agent names, identifying the current agent only if the response marks one. Do not infer or fabricate account data."
+            },
+            {
+              "description": "Total the user's hours for a specified calendar month. The reviewer account must contain tasks in October 2026.",
+              "prompt": "How many hours did I log on ShiftLog in October 2026?",
+              "tools_triggered": "list_tasks",
+              "expected_behavior": "Call list_tasks for the relevant agent and inclusive dates 2026-10-01 through 2026-10-31 (split only if needed). Report the sum of returned task hours and make clear if no tasks were returned; do not invent a total."
+            },
+            {
+              "description": "Draft a client update grounded only in work logged during a specified week. The reviewer account must contain representative tasks in that date range.",
+              "prompt": "Look at what I logged on ShiftLog in the first week of November 2026 and draft a short update email for my client.",
+              "tools_triggered": "list_tasks",
+              "expected_behavior": "Call list_tasks for the relevant agent and dates 2026-11-01 through 2026-11-07. Draft a short email using only returned task details. If no tasks are returned, say so and ask for context instead of fabricating completed work."
+            }
+          ],
+          "negative": [
+            {
+              "description": "General time-tracking advice, not about the user's own work log. Answer generally without calling any ShiftLog tool.",
+              "prompt": "What are good habits for tracking billable hours as a freelancer?"
+            },
+            {
+              "description": "A standalone unit conversion does not require account data. Answer directly and do not call list_tasks, list_agents, or log_task.",
+              "prompt": "How many minutes are 7.5 hours?"
+            },
+            {
+              "description": "The user asks for a generic invoice email, not for a summary of logged work. Offer a generic template without calling any ShiftLog tool or implying an invoice was created.",
+              "prompt": "Write a polite template email for sending an invoice to a client."
+            }
+          ]
+        }
+      },
+      "publication": {
+        "release_notes": "First release: log tasks, list tasks and list agents in ShiftLog.it.",
+        "countries": []
+      }
+    }
+  }
+}
