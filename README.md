@@ -101,6 +101,22 @@ What the connection can't do:
 A task logged through MCP is like any other: it gets the agent's hourly
 rate and appears in the work log, reports and exports.
 
+## Your own rules: a skill
+
+Text logged through MCP is stored as the AI wrote it. To make it follow
+your own rules every time (the wording, which client gets which work,
+ticket references, rounding), give your AI a skill: a `SKILL.md` file
+with your instructions, which it reads whenever it logs work.
+
+Start from the example in
+[`examples/skills/shiftlog-my-style`](examples/skills/shiftlog-my-style/SKILL.md),
+edit the rules, then:
+
+- **Claude Code:** copy the folder to `~/.claude/skills/` (for all your
+  projects) or to a project's `.claude/skills/` (for that project only).
+- **Claude (claude.ai and the desktop app):** put the folder in a ZIP and
+  upload it as a custom skill in Claude's settings.
+
 ## Permissions
 
 The consent page asks for two scopes:
