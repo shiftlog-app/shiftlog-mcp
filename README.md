@@ -117,6 +117,15 @@ edit the rules, then:
 - **Claude (claude.ai and the desktop app):** put the folder in a ZIP and
   upload it as a custom skill in Claude's settings.
 
+In Claude Code, the example also works out how long you worked, with
+`session_time.py` from the same folder (it needs Python 3, and Claude
+offers to install it if it's missing). It reads the session's own
+transcript: the time from the prompt where you said "start timer", or
+from your first request for actual work, with breaks over 30 minutes
+left out, rounded to 15 minutes (`--round` changes that). The script
+reads the transcript on your computer and sends nothing anywhere; only
+the hours go into the task. Elsewhere, Claude asks you for the hours.
+
 ## Permissions
 
 The consent page asks for two scopes:
